@@ -1,6 +1,7 @@
-import 'dart:html';
-
-import 'package:bytebank/screens/transferencia/lista.dart';
+import 'package:bytebank/screens/contatos/contatos_formulario.dart';
+import 'package:bytebank/screens/contatos/contatos_lista.dart';
+import 'package:bytebank/screens/dashboard/dashboard.dart';
+import 'package:bytebank/screens/transferencia/formulario.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(
@@ -19,7 +20,7 @@ class BytebankApp extends StatelessWidget {
           textTheme: ButtonTextTheme.primary,
         ),
       ),
-      home: ListaTransferencias(),
+      home: Dashboard(),
     );
   }
 }

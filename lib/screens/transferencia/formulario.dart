@@ -1,3 +1,4 @@
+import 'package:bytebank/components/alerta_campos.dart';
 import 'package:bytebank/components/editor.dart';
 import 'package:bytebank/models/transferencia/transferencia.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,9 +22,9 @@ class FormularioTransferencia extends StatefulWidget {
 }
 
 class FormularioTransferenciaState extends State<FormularioTransferencia> {
-  final TextEditingController controladorCampoNumeroConta =
+  final TextEditingController _controladorCampoNumeroConta =
       TextEditingController();
-  final TextEditingController controladorValorTransferencia =
+  final TextEditingController _controladorValorTransferencia =
       TextEditingController();
 
   @override
@@ -36,11 +37,11 @@ class FormularioTransferenciaState extends State<FormularioTransferencia> {
         child: Column(
           children: [
             Editor(
-                controlador: controladorCampoNumeroConta,
+                controlador: _controladorCampoNumeroConta,
                 rotulo: _rotuloCampoNumeroConta,
                 dica: _dicaCampoNumeroConta),
             Editor(
-                controlador: controladorValorTransferencia,
+                controlador: _controladorValorTransferencia,
                 rotulo: _rotuloCampoValor,
                 dica: _dicaCampoValor,
                 icone: Icons.monetization_on),
@@ -55,14 +56,14 @@ class FormularioTransferenciaState extends State<FormularioTransferencia> {
   }
 
   void _criaTransferencia(BuildContext context) {
-    final int numeroConta = int.tryParse(controladorCampoNumeroConta.text);
-    final double valor = double.tryParse(controladorValorTransferencia.text);
+    final int numeroConta = int.tryParse(_controladorCampoNumeroConta.text);
+    final double valor = double.tryParse(_controladorValorTransferencia.text);
 
     if (_validarValoresTransferencia(numeroConta, valor)) {
-      final transferenciaCriada = Transferencia(numeroConta, valor);
+      final Transferencia transferenciaCriada = Transferencia(numeroConta, valor);
       Navigator.pop(context, transferenciaCriada);
     } else {
-      _alertaPreencherCamposCorretamente();
+      alertaPreencherCamposCorretamente(context);
     }
   }
 
@@ -71,32 +72,5 @@ class FormularioTransferenciaState extends State<FormularioTransferencia> {
       return true;
     }
     return false;
-  }
-
-  Future<void> _alertaPreencherCamposCorretamente() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Preencha os campos corretamente'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('Por favor preencha os campos corretamente'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Ok'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 }

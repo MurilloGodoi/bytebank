@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:bytebank/components/alerta_campos.dart';
+import 'package:bytebank/database/dao/contato_dao.dart';
 import 'package:bytebank/models/Contato/contato.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +14,8 @@ class _FormularioContatosState extends State<FormularioContatos> {
   final TextEditingController _controladorNome = TextEditingController();
 
   final TextEditingController _controladorNumeroConta = TextEditingController();
+
+  final ContatoDao _contatoDao = ContatoDao();
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +62,9 @@ class _FormularioContatosState extends State<FormularioContatos> {
     final int numeroConta = int.tryParse(_controladorNumeroConta.text);
 
     if (_validarValoresContato(nome, numeroConta)) {
-      final Contato contato = Contato(nome, numeroConta);
-      Navigator.pop(context, contato);
+      var rng = new Random();
+      final Contato contato = Contato(rng.nextInt(100),nome, numeroConta);
+      _contatoDao.save(contato).then((id) => Navigator.pop(context));
     } else {
       alertaPreencherCamposCorretamente(context);
     }

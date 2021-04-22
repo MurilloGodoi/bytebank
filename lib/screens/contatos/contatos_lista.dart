@@ -1,8 +1,15 @@
+import 'package:bytebank/components/loading_buscar_dados.dart';
 import 'package:bytebank/database/dao/contato_dao.dart';
 import 'package:bytebank/models/Contato/contato.dart';
 import 'package:bytebank/screens/contatos/contatos_formulario.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+const _tituloAppBar = 'Contatos';
+
+const _tituloPossivelErro = 'Erro ao buscar os contatos';
+
+const _tituloDaBuscaDeDado = 'Buscando os Contatos...';
 
 class ContatosLista extends StatefulWidget {
   @override
@@ -15,7 +22,7 @@ class _ContatosListaState extends State<ContatosLista> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Contatos'),
+        title: Text(_tituloAppBar),
       ),
       body: FutureBuilder<List<Contato>>(
         initialData: List(),
@@ -28,16 +35,7 @@ class _ContatosListaState extends State<ContatosLista> {
               break;
 
             case ConnectionState.waiting:
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    CircularProgressIndicator(),
-                    Text('Carregando...'),
-                  ],
-                ),
-              );
+              return LoadingBuscarDados(_tituloDaBuscaDeDado);
               break;
 
             case ConnectionState.active:
@@ -54,7 +52,7 @@ class _ContatosListaState extends State<ContatosLista> {
               );
               break;
           }
-          return Text('Erro desconhecido');
+          return Text(_tituloPossivelErro);
         },
       ),
       floatingActionButton: FloatingActionButton(
@@ -78,20 +76,20 @@ class _ContatosListaState extends State<ContatosLista> {
 }
 
 class _ItemContato extends StatelessWidget {
-  final Contato contato;
+  final Contato _contato;
 
-  const _ItemContato(this.contato);
+  const _ItemContato(this._contato);
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
         title: Text(
-          contato.nome,
+          _contato.nome,
           style: TextStyle(fontSize: 24.0),
         ),
         subtitle: Text(
-          contato.numeroConta.toString(),
+          _contato.numeroConta.toString(),
           style: TextStyle(fontSize: 24.0),
         ),
       ),

@@ -1,3 +1,5 @@
+import 'package:bytebank/components/dashboard/item_contatos_menu_bottom_dashboard.dart';
+import 'package:bytebank/components/dashboard/item_transferencias_menu_bottom_dashboard.dart';
 import 'package:bytebank/screens/contatos/contatos_lista.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,41 +19,10 @@ class Dashboard extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Image.asset('images/bytebank_logo.png'),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Material(
-              color: Theme.of(context).primaryColor,
-              child: InkWell(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => ContatosLista(),
-                    ),
-                  );
-                },
-                child: Container(
-                  padding: EdgeInsets.all(8.0),
-                  height: 100,
-                  width: 150,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Icon(
-                        Icons.people,
-                        color: Colors.white,
-                        size: 32.0,
-                      ),
-                      Text(
-                        'Contatos',
-                        style: TextStyle(color: Colors.white, fontSize: 18.0),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          )
+          Row(children: [
+            ItemTransferenciasMenuBottomDashboard(),
+            ItemContatosMenuBottomDashboard(),
+          ],),
         ],
       ),
     );

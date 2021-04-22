@@ -1,8 +1,8 @@
-import 'package:bytebank/database/app_database.dart';
+import 'package:bytebank/database/database_contatos.dart';
 import 'package:bytebank/models/Contato/contato.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../app_database.dart';
+import '../database_contatos.dart';
 
 const String _nomeTabela = 'contatos';
 
@@ -13,7 +13,7 @@ class ContatoDao {
       'numero_conta INTEGER)';
 
   Future<int> save(Contato contato) async {
-    final Database db = await criarBancoDados();
+    final Database db = await criarBancoDadosContatos();
     Map<String, dynamic> contatoMap = _toMap(contato);
     return db.insert(_nomeTabela, contatoMap);
   }
@@ -27,7 +27,7 @@ class ContatoDao {
   }
 
   Future<List<Contato>> findAll() async {
-    final Database db = await criarBancoDados();
+    final Database db = await criarBancoDadosContatos();
     final List<Map<String, dynamic>> resultados = await db.query(_nomeTabela);
     List<Contato> contatos = _toList(resultados);
     return contatos;

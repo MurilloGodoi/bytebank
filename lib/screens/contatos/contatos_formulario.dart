@@ -5,6 +5,12 @@ import 'package:bytebank/database/dao/contato_dao.dart';
 import 'package:bytebank/models/Contato/contato.dart';
 import 'package:flutter/material.dart';
 
+const _tituloAppBar = 'Novo Contato';
+
+const _rotuloCampoNome = 'Nome Completo';
+const _rotuloCampoNumeroConta = 'Número da Conta';
+
+const _textoBotaoCriarContato = 'Adicionar Contato';
 class FormularioContatos extends StatefulWidget {
   @override
   _FormularioContatosState createState() => _FormularioContatosState();
@@ -21,20 +27,20 @@ class _FormularioContatosState extends State<FormularioContatos> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Novo Contato'),
+        title: Text(_tituloAppBar),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(children: <Widget>[
           TextField(
-            decoration: InputDecoration(labelText: 'Nome Completo'),
+            decoration: InputDecoration(labelText:_rotuloCampoNome),
             controller: _controladorNome,
             style: TextStyle(fontSize: 24.0),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: TextField(
-              decoration: InputDecoration(labelText: 'Número da Conta'),
+              decoration: InputDecoration(labelText:_rotuloCampoNumeroConta ),
               controller: _controladorNumeroConta,
               style: TextStyle(fontSize: 24.0),
               keyboardType: TextInputType.number,
@@ -45,10 +51,8 @@ class _FormularioContatosState extends State<FormularioContatos> {
             child: SizedBox(
               width: double.maxFinite,
               child: ElevatedButton(
-                child: Text('Adicionar Contato'),
-                onPressed: () {
-                  _criaContato(context);
-                },
+                child: Text(_textoBotaoCriarContato),
+                onPressed: () =>_criaContato(context),
               ),
             ),
           )
@@ -63,8 +67,8 @@ class _FormularioContatosState extends State<FormularioContatos> {
 
     if (_validarValoresContato(nome, numeroConta)) {
       var rng = new Random();
-      final Contato contato = Contato(rng.nextInt(100),nome, numeroConta);
-      _contatoDao.save(contato).then((id) => Navigator.pop(context));
+      final Contato contatoCriado = Contato(rng.nextInt(100),nome, numeroConta);
+      _contatoDao.save(contatoCriado).then((id) => Navigator.pop(context));
     } else {
       alertaPreencherCamposCorretamente(context);
     }

@@ -1,9 +1,11 @@
 class Transferencia {
-  final int numeroConta;
+  final int id;
   final double valor;
+  final int numeroConta;
 
   Transferencia(
-    this.numeroConta,
+    this.id,
     this.valor,
+    this.numeroConta,
   );
 }
